@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config';
 
 const languageOptions = [
   { value: 'javascript', label: 'JavaScript' },
@@ -24,7 +25,7 @@ export default function Coding() {
   const fetchQuestions = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/coding/questions', {
+      const res = await axios.get(`${API_URL}/api/coding/questions`, {
         headers: { 'x-auth-token': token }
       });
       if (res.data && res.data.length > 0) {
@@ -61,7 +62,7 @@ export default function Coding() {
     setOutput('');
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://localhost:5000/api/coding/run', {
+      const res = await axios.post(`${API_URL}/api/coding/run`, {
         code,
         language,
         stdin: ''

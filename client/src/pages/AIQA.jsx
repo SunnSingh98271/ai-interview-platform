@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config';
 
 export default function AIQA() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function AIQA() {
     setError('');
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://localhost:5000/api/ai/answer', { question }, {
+      const res = await axios.post(`${API_URL}/api/ai/answer`, { question }, {
         headers: { 'x-auth-token': token }
       });
       setAnswer(res.data.answer);

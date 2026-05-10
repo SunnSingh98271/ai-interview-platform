@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config';
 
 export default function Interview() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Interview() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://localhost:5000/api/interview/start', { 
+      const res = await axios.post(`${API_URL}/api/interview/start`, { 
         role, type, count: questionCount 
       }, {
         headers: { 'x-auth-token': token }
@@ -39,14 +40,14 @@ export default function Interview() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://localhost:5000/api/interview/submit', {
+      const res = await axios.post(`${API_URL}/api/interview/submit`, {
         sessionId, questionIndex: currentIndex, answer
       }, { headers: { 'x-auth-token': token } });
       setFeedback(res.data.feedback);
 
       const isLast = currentIndex + 1 === questions.length;
       if (isLast) {
-        await axios.post('http://localhost:5000/api/interview/complete', { sessionId }, {
+        await axios.post(`${API_URL}/api/interview/complete`, { sessionId }, {
           headers: { 'x-auth-token': token }
         });
         alert('🎉 Interview completed! Check your dashboard for scores.');

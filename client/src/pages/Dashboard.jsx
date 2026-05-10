@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
+import API_URL from '../config';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function Dashboard() {
     const fetchStats = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get('http://localhost:5000/api/dashboard/stats', {
+        const res = await axios.get(`${API_URL}/api/dashboard/stats`, {
           headers: { 'x-auth-token': token }
         });
         setStats(res.data);
